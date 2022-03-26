@@ -7,6 +7,7 @@ Created on Mon Jun 21 19:26:13 2021
 import os
 import json
 import tkinter as tk
+import pandas as pd
 
 def first_screen():
     c=tk.Tk()#建立頁面
@@ -153,11 +154,18 @@ def object_screen():
     f1.place(x=400,y=60)
     w.place(x=350,y=100)
     lv=tk.Button(i, text='返回' ,width=5,height=1,command=first_screen)
-    lv.place(x=150,y=360)
-
-    oub=tk.Button(i, text='匯出' ,width=5,height=1)
-    oub.place(x=200,y=360)
+    lv.place(x=200,y=360)
+  #  lv.place(x=150,y=300)
+    def output_Point():
+        df = pd.read_json(r'object.json')
+        df.to_csv(r'spend.txt', index = False)
+        
+    oub=tk.Button(i, text='匯出' ,width=5,height=1,command=output_Point)
+    oub.place(x=150,y=360)
+    exi=tk.Button(i,text='離開',width=5, height=1, command=del_Screen)
+    exi.place(x=250,y=360)
    
+    
     i.mainloop()
 
 
@@ -194,6 +202,8 @@ def spend_screen():
 
     t = tk.Text(i,width=20, height=5)
     c = tk.Text(i,bg='white',width=10, height=5)
+    
+
 
  
     #讀取jason檔案中的資料
@@ -279,7 +289,11 @@ def spend_screen():
     t.place(x=150,y=220)
     lv=tk.Button(i, text='返回' ,width=5,height=1,command=first_screen)
     lv.place(x=150,y=300)
-    ou=tk.Button(i, text='匯出' ,width=5,height=1)
+    def output_Screen():
+        df = pd.read_json(r'spend.json')
+        df.to_csv(r'spend.txt', index = False)
+        
+    ou=tk.Button(i, text='匯出' ,width=5,height=1,command=output_Screen)
     ou.place(x=200,y=300)
     def del_Screen():
         i.destroy()
